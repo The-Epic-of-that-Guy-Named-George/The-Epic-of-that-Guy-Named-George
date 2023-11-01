@@ -31,7 +31,6 @@ def generate_landscape(screen, landscape_type, maxobs, frequency, all_pos, objec
 
     # Update images
     for i in range(0, object_count):
-        # object_list[i] += all_pos
         screen.blit(image, (object_list[i] + all_pos, 570))
     return object_list, object_count
 

@@ -37,15 +37,6 @@ class Character(pygame.sprite.Sprite):
     def draw(self):
         screen.blit(self.image, (player_pos.x, player_pos.y))
 
-    # def update_image(self, new_image):
-        # pygame.sprite.Sprite.__init__(self)
-        # self.image = pygame.image.load(character_image_name)
-        # self.rect = self.image.get_rect()
-    # def draw(self, player_pos):
-    #     pygame.sprite.Sprite.__init__(self)
-    #     self.image = pygame.image.load(character_image_name)
-    #     self.rect = self.image.get_rect()
-    #     screen.blit(self.image, (player_pos.x, player_pos.y))
 class Ground(pygame.sprite.Sprite):
     def __init__(self, color, width, height):
         pygame.sprite.Sprite.__init__(self)
@@ -57,12 +48,7 @@ class Ground(pygame.sprite.Sprite):
 
         self.mask = pygame.mask.from_surface(self.image)
 
-        screen.blit(self.image, (0,670))
-    # def draw(self, x, y):
-    #     pygame.sprite.Sprite.__init__(self)
-    #     self.image = pygame.image.load("Objects/ground.png")
-    #     self.rect = self.image.get_rect()
-        
+        screen.blit(self.image, (0,670))        
 
 while running:
     reset_animation += 1
@@ -113,30 +99,16 @@ while running:
     # Decide the state of the character.
     if not state == "jumping1" and not state == "jumping2" and not state == "jumping3":
         character_image_name, animation_number = animations.load_images(name, state, animation_number)
-        # screen.fill((255, 255, 255))
-        # Character.draw(Character, player_pos)
-        # screen.blit(Character.image, (player_pos.x, player_pos.y))
     elif state == "jumping2":
-        # screen.fill((255, 255, 255))
-        # Character.draw(Character, player_pos)
-        # screen.blit(Character.image, (player_pos.x, player_pos.y))
         character_image_name = "Animations/" + name + "_jumping_2.png"
         state = "jumping3"
     elif state == "jumping3":
-        # screen.fill((255, 255, 255))
-        # Character.draw(Character, player_pos)
-        # screen.blit(Character.image, (player_pos.x, player_pos.y))
         character_image_name = "Animations/" + name + "_jumping_2.png"
         state = "standing"
         animation_number = 0
     else:
         character_image_name = "Animations/" + name + "_jumping_1.png"
         state = "jumping2"
-    # Character.draw(Character, player_pos)
-
-    # screen.blit(character, (player_pos.x, player_pos.y))
-
-    # screen.blit(Character.image, (player_pos.x, player_pos.y))
 
     # Draw the ground
     ground = Ground((0,0,0),0,0)
@@ -151,22 +123,9 @@ while running:
     
     # Collision detection
     character_collided_with_ground = pygame.sprite.collide_mask(ground, character)
-    # character_collided_with_ground = pygame.sprite.spritecollide(character, scenery, False)
-
-    # print(character.rect, ground.rect)
-    # print(character_collided_with_ground)
-    # if not any(character_collided_with_ground):
     if character_collided_with_ground == None:
         player_pos.y += gravity_strength
-        # print("falling")
     else:
         player_pos.y -= 1
-        # print("collided")
-
-    # if all_pos < -1280:
-    #     all_pos = 0
-    # elif all_pos > 0:
-    #     all_pos = -1280
-
 
 pygame.quit()
