@@ -1,5 +1,6 @@
 # The Epic of that Guy Named George
 ![George.png](Images/George.png)
+
 A game of grand adventure and hilarity.
 
 It was in ancient times, when plot was greaty lacking, that the guy named George - no, *that* guy named George, set off on a grand adventure to follow in the footsteps of his great ancestor Stickman Steve, whom he had learned about through the great tales heard in the [Library of Epics](https://nathanscheck.com/projects) (as told by the reader of ancient texts, [Ruffle](https://ruffle.rs)).
