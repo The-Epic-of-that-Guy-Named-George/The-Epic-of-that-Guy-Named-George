@@ -119,7 +119,6 @@ while running:
 
     # Draw Health
     animations.draw_health(george_health, screen)
-    george_health -= 0.1
     
     # Collision detection
     character_collided_with_ground = pygame.sprite.collide_mask(ground, character)

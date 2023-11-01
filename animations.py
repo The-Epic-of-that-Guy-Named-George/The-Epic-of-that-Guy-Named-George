@@ -24,7 +24,7 @@ def generate_landscape(screen, landscape_type, maxobs, frequency, all_pos, objec
         for i in range(len(object_list) + 1, maxobs):
             appearance = random.randint(0, frequency)
             if appearance > 1:
-                object_list[object_count] = 1280 + random.randint(0, 600)
+                object_list[object_count] = 1280 + random.randint(0, 6000)
                 screen.blit(image, (object_list[object_count],570))
                 # Give the object a number and an x coordinate.
                 object_count += 1
