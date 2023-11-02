@@ -21,6 +21,8 @@ object_list = {}
 create = True
 object_count = 0
 george_health = 100
+enemy = {}
+enemy_group = pygame.sprite.Group()
 
 class Character(pygame.sprite.Sprite):
     def __init__(self, color, width, height):
@@ -48,7 +50,25 @@ class Ground(pygame.sprite.Sprite):
 
         self.mask = pygame.mask.from_surface(self.image)
 
-        screen.blit(self.image, (0,670))        
+        screen.blit(self.image, (0,670))     
+
+class Enemy(pygame.sprite.Sprite):
+    def __init__(self, color, width, height, x, y):
+        pygame.sprite.Sprite.__init__(self)
+
+        self.image = pygame.image.load("Enemies/scribblebeast.png")
+        self.image.set_colorkey((255, 255, 255))
+
+        self.x = x
+        self.y = y
+
+        self.rect = self.image.get_rect().move(self.x,self.y)
+
+        self.mask = pygame.mask.from_surface(self.image)
+
+    def draw(self):
+        screen.blit(self.image, (self.x,self.y))     
+
 
 while running:
     reset_animation += 1
@@ -115,11 +135,14 @@ while running:
     scenery = pygame.sprite.Group()
     scenery.add(ground)
     object_list, object_count = animations.generate_landscape(screen, "Objects/Grass.png", 100, 3, all_pos, object_list, object_count, create)
-    create = False # Really, you must only create once. It can mess things up.
 
     # Draw Health
     animations.draw_health(george_health, screen)
     
+    # Create enemies
+    enemy, enemy_group = animations.generate_enemies(Enemy, enemy, enemy_group, 5, [700,3000], all_pos, create)
+    create = False # Really, you must only create once. It can mess things up.
+
     # Collision detection
     character_collided_with_ground = pygame.sprite.collide_mask(ground, character)
     if character_collided_with_ground == None:

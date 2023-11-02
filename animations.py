@@ -37,3 +37,16 @@ def generate_landscape(screen, landscape_type, maxobs, frequency, all_pos, objec
 def draw_health(health, screen):
     pygame.draw.rect(screen, (200,200,200), (48, 48, 204, 44))
     pygame.draw.rect(screen, (255,0,0), (50, 50, health * 2, 40))
+
+# Distance is a list with a minimum value and a maximum value.
+def generate_enemies(Enemy, enemy, enemy_group, enemy_count, distance, all_pos,create):
+    if create:
+        for i in range(0, enemy_count):
+            distance_int = random.randint(distance[0], distance[1])
+            enemy[i] = Enemy((0,0,0),0,0,distance_int+1280,568)
+            enemy_group.add(enemy[i])
+    for i in range(0, len(enemy)):
+        enemy[i].x += all_pos
+        enemy[i].draw()
+        enemy[i].x -= all_pos
+    return enemy, enemy_group
