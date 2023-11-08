@@ -1,5 +1,5 @@
 import pygame
-import easygui
+# import easygui
 import animations
 import random
 
