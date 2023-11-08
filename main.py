@@ -1,6 +1,7 @@
 import pygame
 import easygui
 import animations
+import random
 
 pygame.init()
 screen = pygame.display.set_mode((1280, 720))
@@ -23,6 +24,7 @@ object_count = 0
 george_health = 100
 enemy = {}
 enemy_group = pygame.sprite.Group()
+moved = 0
 
 class Character(pygame.sprite.Sprite):
     def __init__(self, color, width, height):
@@ -66,11 +68,14 @@ class Enemy(pygame.sprite.Sprite):
 
         self.mask = pygame.mask.from_surface(self.image)
 
-    def draw(self):
-        screen.blit(self.image, (self.x,self.y))     
+    def draw(self, x, y):
+        screen.blit(self.image, (x,y))     
 
 
 while running:
+    moved = 0
+    first_all_pos = all_pos
+    pygame.display.set_caption('The Epic of that Guy Named George')
     reset_animation += 1
     if reset_animation >= dt * 200:
         reset_animation = 0
@@ -83,29 +88,22 @@ while running:
         elif event.type == None:
             animation_number = 0
             state = "standing"
-        # elif event.type == pygame.KEYDOWN:
         pygame_events = pygame.key.get_pressed()
         if pygame_events[pygame.K_UP]:
-        # if event.key == pygame.K_UP:
             player_pos.y -= 200
             state = "jumping1"
             animation_number = 2
-        # if event.key == pygame.K_DOWN:
         elif pygame_events[pygame.K_DOWN]:
             state = "attack"
             animation_number = 1
-        # if event.key == pygame.K_LEFT:
         elif pygame_events[pygame.K_LEFT]:
             state = "running"
             animation_number = 1
-            # player_pos.x -= 1
             all_pos += 30
-        # if event.key == pygame.K_RIGHT:
         elif pygame_events[pygame.K_RIGHT]:
             state = "running"
             animation_number = 1
             pygame_events = 0
-            # player_pos.x += 1
             all_pos -= 30
 
     pygame.display.flip()
@@ -140,7 +138,10 @@ while running:
     animations.draw_health(george_health, screen)
     
     # Create enemies
-    enemy, enemy_group = animations.generate_enemies(Enemy, enemy, enemy_group, 5, [700,3000], all_pos, create)
+    enemy, enemy_group = animations.generate_enemies(Enemy, enemy, enemy_group, 5, [1000,3000], all_pos, create)
+    # print("enemy")
+    # print(enemy)
+    # print()
     create = False # Really, you must only create once. It can mess things up.
 
     # Collision detection
@@ -149,5 +150,16 @@ while running:
         player_pos.y += gravity_strength
     else:
         player_pos.y -= 1
+    for i in range(0, len(enemy)):
+        collided_with_enemies = pygame.sprite.collide_mask(character, enemy[i])
+        # print(str(enemy[i].rect))
+        # pygame.draw.rect(screen, (0,0,0), enemy[i].rect)
+        if not collided_with_enemies == None:
+            george_health -= 0.5#random.randint(1,5)
+            # print(str(collided_with_enemies))
+        else:
+            if george_health < 100:
+                george_health += 0.01
+    moved = -(first_all_pos - all_pos)
 
 pygame.quit()

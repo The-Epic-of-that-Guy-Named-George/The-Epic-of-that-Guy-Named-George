@@ -46,7 +46,10 @@ def generate_enemies(Enemy, enemy, enemy_group, enemy_count, distance, all_pos,c
             enemy[i] = Enemy((0,0,0),0,0,distance_int+1280,568)
             enemy_group.add(enemy[i])
     for i in range(0, len(enemy)):
-        enemy[i].x += all_pos
-        enemy[i].draw()
-        enemy[i].x -= all_pos
+        # enemy[i].rect = enemy[i].image.get_rect().move(-enemy[i].x,-enemy[i].y)
+        # enemy[i].x += all_pos
+        enemy[i].draw(enemy[i].x+all_pos,enemy[i].y)
+        enemy[i].mask = pygame.mask.from_surface(enemy[i].image)
+        enemy[i].rect = enemy[i].image.get_rect().move(enemy[i].x+all_pos,enemy[i].y)
+        # enemy[i].x -= all_pos
     return enemy, enemy_group
